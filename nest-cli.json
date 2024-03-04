@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json.schemastore.org/nest-cli",
+  "collection": "@nestjs/schematics",
+  "sourceRoot": "apps/e-commerce/src",
+  "compilerOptions": {
+    "deleteOutDir": true,
+    "webpack": true,
+    "tsConfigPath": "apps/e-commerce/tsconfig.app.json"
+  },
+  "monorepo": true,
+  "root": "apps/e-commerce",
+  "projects": {
+    "e-commerce": {
+      "type": "application",
+      "root": "apps/e-commerce",
+      "entryFile": "main",
+      "sourceRoot": "apps/e-commerce/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/e-commerce/tsconfig.app.json"
+      }
+    },
+    "social-media": {
+      "type": "application",
+      "root": "apps/social-media",
+      "entryFile": "main",
+      "sourceRoot": "apps/social-media/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/social-media/tsconfig.app.json"
+      }
+    },
+    "authentication": {
+      "type": "library",
+      "root": "libs/authentication",
+      "entryFile": "index",
+      "sourceRoot": "libs/authentication/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/authentication/tsconfig.lib.json"
+      }
+    }
+  }
+}
