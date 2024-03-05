@@ -88,11 +88,10 @@ export class AuthService {
       }
 
       const changedPassword = await bcrypt.hash(body.confirmNewPassword, 12);
-
-      const isPasswordChanged =
-        await this.userService.changeUserPasswordService(user, changedPassword);
-
-      return isPasswordChanged;
+      return await this.userService.changeUserPasswordService(
+        user,
+        changedPassword
+      );
     } catch (error) {
       return error;
     }
