@@ -6,7 +6,7 @@ import * as mongoose from 'mongoose';
 @Injectable()
 export class UserRepository {
   constructor(
-    @InjectModel(User.name) private userModel: mongoose.Model<User>,
+    @InjectModel(User.name) private userModel: mongoose.Model<User>
   ) {}
 
   async createUserRepository(data) {
@@ -27,5 +27,26 @@ export class UserRepository {
     } catch (error) {
       return error;
     }
+  }
+
+  async findUserByIdRepository(id) {
+    try {
+      return await this.userModel.findById({ _id: id });
+    } catch (error) {
+      return error;
+    }
+  }
+
+  async changeUserPasswordRepository(user, password) {
+    try {
+      const updatedUser = await this.userModel.findByIdAndUpdate(user.id, {
+        password: password,
+      });
+
+      if (!updatedUser) {
+        throw new Error('there was problem changing password');
+      }
+      return { status: true };
+    } catch (error) {}
   }
 }

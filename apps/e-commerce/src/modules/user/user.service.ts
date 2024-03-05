@@ -12,4 +12,12 @@ export class UserService {
   async checkUserExistsService(email) {
     return await this.userRepository.checkUserExistsRepository(email);
   }
+
+  async findUserByIdService(id) {
+    return await this.userRepository.findUserByIdRepository(id);
+  }
+
+  async changeUserPasswordService(user, password) {
+    return await this.userRepository.changeUserPasswordRepository(user, password);
+  }
 }

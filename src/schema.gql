@@ -16,6 +16,10 @@ type SignInUserResponse {
   id: String!
 }
 
+type ChangeUserPasswordResponse {
+  status: Boolean!
+}
+
 type Query {
   printHelloWorld: HelloResponse!
 }
@@ -23,6 +27,7 @@ type Query {
 type Mutation {
   signUp(CreateUserInput: CreateUserInput!): CreateUserResponse!
   signIn(SignInUserInput: SignInUserInput!): SignInUserResponse!
+  changeUserPasswordService(ChangeUserPasswordInput: ChangeUserPasswordInput!): ChangeUserPasswordResponse!
 }
 
 input CreateUserInput {
@@ -34,4 +39,10 @@ input CreateUserInput {
 input SignInUserInput {
   email: String!
   password: String!
+}
+
+input ChangeUserPasswordInput {
+  oldPassword: String!
+  newPassword: String!
+  confirmNewPassword: String!
 }
