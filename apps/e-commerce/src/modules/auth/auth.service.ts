@@ -2,6 +2,7 @@ import { Injectable, BadRequestException } from '@nestjs/common';
 import { UserService } from '../user/user.service';
 import { JwtTokenService } from '@app/authentication';
 import * as bcrypt from 'bcrypt';
+import lang from '../../constants/language';
 
 @Injectable()
 export class AuthService {
@@ -17,7 +18,7 @@ export class AuthService {
       );
 
       if (userExists) {
-        throw new BadRequestException('User already Exists');
+        throw new BadRequestException(lang.DUPLICATE_EMAIL);
       }
 
       data.password = await bcrypt.hash(data.password, 12);
@@ -43,13 +44,13 @@ export class AuthService {
       const user = await this.userService.checkUserExistsService(data.email);
 
       if (!user) {
-        throw new BadRequestException('email/password incorrect');
+        throw new BadRequestException(lang.INCORRECT_EMAIL_OR_PASSWORD);
       }
 
       const valid = await bcrypt.compare(data.password, user.password);
 
       if (!valid) {
-        throw new BadRequestException('email/password incorrect');
+        throw new BadRequestException(lang.INCORRECT_EMAIL_OR_PASSWORD);
       }
 
       const payload = {
@@ -71,7 +72,7 @@ export class AuthService {
     try {
       const userDetails = await this.userService.findUserByIdService(user.id);
       if (!userDetails) {
-        throw new BadRequestException('User not found');
+        throw new BadRequestException(lang.USER_NOT_FOUND);
       }
 
       const valid = await bcrypt.compare(
@@ -80,11 +81,11 @@ export class AuthService {
       );
 
       if (!valid) {
-        throw new BadRequestException('old password doesnot match');
+        throw new BadRequestException(lang.INCORRECT_PASSWORD);
       }
 
       if (body.newPassword != body.confirmNewPassword) {
-        throw new BadRequestException('new password doesnot match');
+        throw new BadRequestException(lang.PASSWORD_DOESNOT_MATCH);
       }
 
       const changedPassword = await bcrypt.hash(body.confirmNewPassword, 12);
